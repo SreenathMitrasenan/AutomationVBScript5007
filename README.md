@@ -1,2 +1,2 @@
 # AutomationVBScript5007
-This repository will have generic vbscript utilities
+First Script designed to convert multiple json file to Excel at once
