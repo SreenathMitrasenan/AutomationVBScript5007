@@ -1,0 +1,56 @@
+Dim objShell,objEnvUser,objEnvSys,strCurDir,oldSystemPath,newSystemPath
+
+
+
+Set objShell = CreateObject("WScript.Shell")
+Set objEnvUser = objShell.Environment("USER")
+Set objEnvSys = objShell.Environment("System")
+strCurDir    = objShell.CurrentDirectory
+
+mHome	=	strCurDir&"\apache-maven"
+jHome	=	strCurDir&"\jdk"
+mPath	=	mHome&"\bin"
+jPath	=	jHome&"\bin"
+
+msgbox mHome
+'For Maven user variable
+'====================================================
+
+objShell.Popup mHome, 2, "Setting Maven User Home Path"
+objEnvUser("M2_HOME") =	mHome
+	
+'For Maven system variable
+'====================================================
+
+objShell.Popup mHome, 2, "Setting Maven System Home Path"
+objEnvSys("M2_HOME") =	mHome
+
+
+'For Java user variable
+'====================================================
+objShell.Popup jHome, 2, "Setting JAVA(JDK) User Home Path"
+objEnvUser("JAVA_HOME") =	jHome
+
+'For Java system variable
+'====================================================
+objShell.Popup jHome, 2, "Setting JAVA(JDK) System Home Path"
+objEnvSys("JAVA_HOME") =	jHome
+'
+ 
+'Setting Path Variables
+'MavenPathToAdd 	= 	"C:\Maven\apache-maven-3.8.1\bin"
+'JavaPathToAdd	=	"C:\Java\jdk-16.0.1\bin"
+objShell.Popup mPath, 2, "Setting Maven bin in Path Variable"
+Call AddPath(mPath)
+objShell.Popup mPath, 2, "Setting JDK bin in Path Variable"
+Call AddPath(jPath)
+ 
+	Function AddPath(argNewPath)
+		oldSystemPath = objEnvSys("PATH")
+		newSystemPath = oldSystemPath & ";" & argNewPath
+		objEnvSys("PATH") = newSystemPath
+	End Function
+
+
+ objShell.Popup "Open CMD and Type", 10, "VERIFY  java -version & mvn --version"
+ Set objShell=nothing
